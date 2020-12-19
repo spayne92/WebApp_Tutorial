@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "BaseFileServerWebApp": { // Used when run as executable service.
+    "BaseFileServer": { // Used when run as executable service.
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
