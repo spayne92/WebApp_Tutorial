@@ -1,5 +1,5 @@
 {
-  "iisSettings": {
+  "iisSettings": {  // Used when run as IIS service.
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "DutchTreat": {
+    "BaseFileServerWebApp": { // Used when run as executable service.
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
