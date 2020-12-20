@@ -1,17 +1,18 @@
 ﻿console.log("Hello Pluralsight");
 
-var theForm = document.getElementById("theForm");
-theForm.hidden = true;
+var theForm = $("#theForm");
+// JQuery API provides 'hide' method, handling different browsers appropriate hiding.
+theForm.hide(); 
 
-var button = document.getElementById("buyButton");
-// "Add"-ing, on top of other listeners.
-button.addEventListener("click", function () { // Anonymous function declared in-line to be executed on click.
+var button = $("#buyButton");
+button.on("click", function () { // Anonymous function declared in-line to be executed on click.
     console.log("Buying Item");
 });
 // Anonymous function is an unnamed method much like a C# lamda. Useful for when a method will not be reused.
 
-
-// Drilling into individual elements from a class name becomes difficult.
-// Time to introduce JQuery.
-var productInfo = document.getElementsByClassName("product-props");
-var listItems = productInfo.item[0].children;
+// JQuery allows list to be returned directly with syntax similar to CSS selectors.
+var productInfo = $(".product-props li");   //document.getElementsByClassName("product-props");
+                                            //var listItems = productInfo.item[0].children;
+productInfo.on("click", function () {
+    console.log("You clicked on " + $(this).text()); // 'this' keyword accesses clicked object
+});
