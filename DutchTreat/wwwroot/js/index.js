@@ -14,7 +14,7 @@ $(document).ready(function () { // jQuery 'ready' method ensures DOM is loaded b
 
     // JQuery allows list to be returned directly with syntax similar to CSS selectors.
     var productInfo = $(".product-props li");   //document.getElementsByClassName("product-props");
-    //var listItems = productInfo.item[0].children;
+                                                //var listItems = productInfo.item[0].children;
     productInfo.on("click", function () {
         console.log("You clicked on " + $(this).text()); // 'this' keyword accesses clicked object
     });
