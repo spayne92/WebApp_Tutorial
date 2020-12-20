@@ -7,9 +7,7 @@ namespace DutchTreat.Controllers
     {
         public IActionResult Index()
         {
-            // Testing new developer exception page.
-            throw new InvalidOperationException();
-            //return View();
+            return View();
         }
     }
 }
