@@ -22,6 +22,11 @@ namespace DutchTreat
 
             // Static file serving, but only from wwwroot directory - which had to be created.
             app.UseStaticFiles();
+
+
+            // Required Nuget install of OdeToCode.UseNodeModules for .NET
+            // Serves files from node_modules directory, installed JS modules like JQuery. 
+            app.UseNodeModules();
         }
     }
 }
