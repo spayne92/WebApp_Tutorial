@@ -9,5 +9,20 @@ namespace DutchTreat.Controllers
         {
             return View();
         }
+
+        public IActionResult Contact()
+        {
+            // Set in Controller as opposed to in CSHTML.
+            ViewBag.Title = "Contact Us";
+
+            return View();
+        }
+
+        public IActionResult About()
+        {
+            ViewBag.Title = "About Us";
+
+            return View();
+        }
     }
 }
