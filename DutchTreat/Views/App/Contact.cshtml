@@ -1,4 +1,5 @@
-﻿@{ 
+﻿@model ContactViewModel
+@{ 
     <!-- Set in one place for both GET & POST views. -->
     ViewBag.Title = "Contact Us";
 }
@@ -6,23 +7,24 @@
 <!-- Tells form to use post back to server when submitted. -->
 <!-- Searches for a POST controller method matching the view's name. -->
 <form method="post">
-    <label>Your Name:</label>
+    <!-- Sets focus to 'asp-for' specified input when clicked/focused. -->
+    <label asp-for="Name">Your Name:</label>
     <br />
-    <!-- Setting 'name' property maps up with model properties. -->
-    <input name="name"/>
+    <!-- Setting 'asp-for' property of input maps up with model properties. -->
+    <input asp-for="Name" />
     <br />
-    <label>Email:</label>
+    <label asp-for="Email">Email:</label>
     <br />
     <!-- Setting 'type' property validates input as 'valid' email format. -->
-    <input type="email" name="email"/>
+    <input type="email" asp-for="Email" />
     <br />
-    <label>Subject:</label>
+    <label asp-for="Subject">Subject:</label>
     <br />
-    <input type="text" name="subject"/>
+    <input type="text" asp-for="Subject" />
     <br />
-    <label>Message:</label>
+    <label asp-for="Message">Message:</label>
     <br />
-    <textarea rows="4" name="message"></textarea>
+    <textarea rows="4" asp-for="Message"></textarea>
     <br />
     <!-- Form looks for 'submit' input to trigger specified 'method'. -->
     <input type="submit" value="Send Message" />
