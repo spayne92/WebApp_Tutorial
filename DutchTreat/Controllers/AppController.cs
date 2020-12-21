@@ -17,6 +17,8 @@ namespace DutchTreat.Controllers
             // Set in Controller as opposed to in CSHTML.
             ViewBag.Title = "Contact Us";
 
+            throw new InvalidOperationException("Bad things happen.");
+
             return View();
         }
 

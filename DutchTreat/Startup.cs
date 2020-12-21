@@ -28,7 +28,9 @@ namespace DutchTreat
             }
             else
             {
-                // Add user facing error page.
+                /* -- NEVER GOT REDIRECT TO WORK */
+                // Add user facing error page. 
+                app.UseExceptionHandler("/error");
             }
 
             // Static file serving, but only from wwwroot directory - which had to be created.
