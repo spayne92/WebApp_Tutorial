@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using DutchTreat.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DutchTreat.Controllers
 {
@@ -14,23 +14,19 @@ namespace DutchTreat.Controllers
         [HttpGet("contact")] 
         public IActionResult Contact()
         {
-            // Set in Controller as opposed to in CSHTML.
-            ViewBag.Title = "Contact Us";
-
             return View();
         }
 
         // HttpPost maps up with HTML 'method=post' and View name.
         [HttpPost("contact")]
-        public IActionResult Contact(object model)
+        public IActionResult Contact(ContactViewModel model)
         {
-            ViewBag.Title = "Contact Us";
-
             return View();
         }
 
         public IActionResult About()
         {
+            // Set in Controller as opposed to in CSHTML.
             ViewBag.Title = "About Us";
 
             return View();
