@@ -30,5 +30,8 @@
 
     <!-- At bottom to prevent execution from happening before HTML elements have been created.-->
     <script src="~/js/index.js"></script>
+
+    <!-- Renders section using contents of the specific view's 'Scripts' container.  -->
+    @RenderSection("scripts", false) <!-- Setting 'false' prevents section from being required of all views. -->
 </body>
 </html>
