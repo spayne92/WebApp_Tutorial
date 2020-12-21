@@ -17,7 +17,14 @@ namespace DutchTreat.Controllers
             // Set in Controller as opposed to in CSHTML.
             ViewBag.Title = "Contact Us";
 
-            throw new InvalidOperationException("Bad things happen.");
+            return View();
+        }
+
+        // HttpPost maps up with HTML 'method=post' and View name.
+        [HttpPost("contact")]
+        public IActionResult Contact(object model)
+        {
+            ViewBag.Title = "Contact Us";
 
             return View();
         }
