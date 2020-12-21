@@ -10,6 +10,8 @@ namespace DutchTreat.Controllers
             return View();
         }
 
+        // Changes routing URL to be from 'root' instead of '/app/'.
+        [HttpGet("contact")] 
         public IActionResult Contact()
         {
             // Set in Controller as opposed to in CSHTML.
