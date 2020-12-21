@@ -1,10 +1,18 @@
-﻿using DutchTreat.ViewModels;
+﻿using DutchTreat.Services;
+using DutchTreat.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DutchTreat.Controllers
 {
     public class AppController : Controller
     {
+        private IMailService _mailService;
+
+        public AppController(IMailService mailService)
+        {
+            _mailService = mailService;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -25,10 +33,18 @@ namespace DutchTreat.Controllers
             if (ModelState.IsValid)
             {
                 // Send the email.
+                _mailService.SendMessage("spayne@mst.edu", model.Subject, $"From: {model.Name} - {model.Email}, Message: {model.Message}");
+                
+                // Communicate back to view/form. 
+                ViewBag.UserMessage = "Mail Sent";
+
+                // Clear model, so form is cleared on refresh.
+                ModelState.Clear();
             }
             else
             {
                 // Show the erros.
+                // Shouldn't be needed if Pages section worked, but it doesn't.
             }
 
             return View();

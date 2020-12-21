@@ -1,3 +1,4 @@
+using DutchTreat.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,10 @@ namespace DutchTreat
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // Sets up dependency injection to inject given class in place of interface.
+            services.AddTransient<IMailService, NullMailService>();
+            // Support for real mail service needed
+
             // Adds MVC service dependencies (req. for MapControllerRoute).
             services.AddControllersWithViews();
         }
