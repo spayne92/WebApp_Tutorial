@@ -1,0 +1,37 @@
+﻿<!-- Layout to be rendered by all views. -->
+<!-- Assigned for each of them by use of _ViewStart. -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dutch Treat: @ViewBag.Title</title>
+    <!-- Root '~' addition needed after file moved to nested dir. -->
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <h1>Welcome to Dutch Treat</h1>
+        <menu>
+            <ul>
+                <li><a asp-controller="App" asp-action="Index">Home</a></li>
+                <li><a asp-controller="App" asp-action="Contact">Contact</a></li>
+                <li><a asp-controller="App" asp-action="About">About</a></li>
+            </ul>
+        </menu>
+    </header>
+    <section>
+        <h2>@ViewBag.Title</h2>
+        <!-- Renders contents of view Layout is templating. -->
+        @RenderBody() 
+    </section>
+    <footer>Copyright 2017 Dutch Treat LLC</footer>
+
+    <!-- Above index.js so it can be consumed by by that script. Couldn't be drag/dropped, had to be manually typed. -->
+    <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+
+    <!-- At bottom to prevent execution from happening before HTML elements have been created.-->
+    <script src="~/js/index.js"></script>
+
+    <!-- Renders section using contents of the specific view's 'Scripts' container.  -->
+    @RenderSection("scripts", false) <!-- Setting 'false' prevents section from being required of all views. -->
+</body>
+</html>

@@ -1,4 +1,4 @@
-﻿{
+{
   "iisSettings": {  // Used when run as IIS service.
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
@@ -18,10 +18,10 @@
     "DutchTreat": { // Used when run as executable service.
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:8888",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "http://localhost:8888"
     }
   }
 }
