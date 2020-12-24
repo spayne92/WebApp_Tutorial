@@ -1,0 +1,5 @@
+{
+	"ConnectionStrings": {
+		"DutchConnectionString": "Server=localhost;Database=dutch_treat_db;User Id=admin;Persist Security Info=True;"
+	}
+}
