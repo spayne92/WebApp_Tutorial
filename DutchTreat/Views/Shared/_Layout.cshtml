@@ -4,11 +4,16 @@
 <html>
 <head>
     <title>Dutch Treat: @ViewBag.Title</title>
+
+    <!-- Bootstrap declaration before site.css allows use of site.css to theme Bootstrap modules. -->
+    <link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    
     <!-- Root '~' addition needed after file moved to nested dir. -->
     <link href="~/css/site.css" rel="stylesheet" />
 </head>
 <body>
-    <header>
+    <!-- BS provides fixed width containers that resize with page. -->
+    <header class="container">
         <h1>Welcome to Dutch Treat</h1>
         <menu>
             <ul>
@@ -18,15 +23,20 @@
             </ul>
         </menu>
     </header>
-    <section>
+    <section class="container">
         <h2>@ViewBag.Title</h2>
         <!-- Renders contents of view Layout is templating. -->
-        @RenderBody() 
+        @RenderBody()
     </section>
-    <footer>Copyright 2017 Dutch Treat LLC</footer>
+    <footer class="container">
+        <div class="text-center">Copyright 2017 Dutch Treat LLC</div>        
+    </footer>
 
     <!-- Above index.js so it can be consumed by by that script. Couldn't be drag/dropped, had to be manually typed. -->
     <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+
+    <!-- After jQuery, because it requires jQuery. Before index.js so that it can be consumed. -->
+    <script src="~/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 
     <!-- At bottom to prevent execution from happening before HTML elements have been created.-->
     <script src="~/js/index.js"></script>
