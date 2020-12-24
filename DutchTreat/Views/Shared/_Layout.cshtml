@@ -7,7 +7,10 @@
 
     <!-- Bootstrap declaration before site.css allows use of site.css to theme Bootstrap modules. -->
     <link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    
+
+    <!-- Before site.css in case we want site.css to override its settings. -->
+    <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
     <!-- Root '~' addition needed after file moved to nested dir. -->
     <link href="~/css/site.css" rel="stylesheet" />
 </head>
@@ -16,7 +19,7 @@
     <header class="container">
         <!-- HTML5 'nav' element. Bootstrap styling classes. -->
         <nav class="navbar navbar-dark bg-dark navbar-expand-md">
-            <h1 class="navbar-brand">Welcome to Dutch Treat</h1>
+            <h1 class="navbar-brand"><i class="fa fa-paint-brush"></i> Welcome to Dutch Treat</h1>
             <button class="navbar-toggler" data-toggle="collapse" data-target="#theMenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
