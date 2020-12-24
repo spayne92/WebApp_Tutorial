@@ -1,48 +1,49 @@
-﻿/* Applies to all contents of the 'body' element. */
-body {
+﻿
+/* Applies to all contents of the 'body' element. */
+/*body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+}*/
 
 /* Applies more specifically to 'submit' types. !Order does not matter! */
-input[type=submit] {
+/*input[type=submit] {
   width: auto;
-}
+}*/
 
 /* Applies more generally to all 'input' as well as 'textarea' elements. */
-input, textarea {
+/*input, textarea {
   font-size: 18px;
   width: 200px;
-}
+}*/
 
 /* Applies to all 'label' elements in the scope. */
-label {
+/*label {
   font-size: 16px;
-}
+}*/
 
 
 /* Applies only to the single element with the given ID assigned. */
-#theForm {
+/*#theForm {
   background-color: #d0d0d0;
-}
+}*/
 
   /* Applies only to children of the single element with the given ID. */
-  #theForm input[type=submit] {
+  /*#theForm input[type=submit] {
     background-color: green;
     color: white;
-  }
+  }*/
 
 /* Applies to 'ul' elements with the class 'product-props'. */
-ul.product-props {
+/*ul.product-props {
   font-size: small;
-}
+}*/
 
   /* Applies to child 'li' elements of the above specified 'ul' elements. */
-  ul.product-props li {
+  /*ul.product-props li {
     list-style-type: none;
-  }
+  }*/
 
 /* Applies to all elements with the 'product-info' class. */
-.product-info {
+/*.product-info {
   border: 1px solid grey;
   display: inline-block;
   padding: 8px 2px;
@@ -50,10 +51,10 @@ ul.product-props {
   width: 450px;
   background-color: lightgray;
   border-radius: 5px;
-}
+}*/
 
     /* Applies to all 'img' elements that are children of an element with the class. */
-  .product-info img {
+  /*.product-info img {
     margin: 3px;
     float: left;
     border: 1px solid black;
@@ -77,25 +78,25 @@ ul.product-props {
     .popup-form label {
         width: 150px;
         display: inline-block;
-    }
+    }*/
 
     /* Applies more specifically to both types of input within the form. */
-    .popup-form input[type=checkbox], .popup-form input[type=submit] {
+    /*.popup-form input[type=checkbox], .popup-form input[type=submit] {
         width: auto;
     }
 
 menu li {
     display: inline;
-}
+}*/
 
     /* Applies styling after each list item. */
-    menu li::after {
+    /*menu li::after {
         content: '|';
-    }
+    }*/
 
     /* Applies only after the LAST 'li' element. */
-    menu li:last-of-type::after {
+    /*menu li:last-of-type::after {
         content: "";
-    }
+    }*/
 
 

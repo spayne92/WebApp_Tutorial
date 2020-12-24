@@ -4,29 +4,54 @@
 <html>
 <head>
     <title>Dutch Treat: @ViewBag.Title</title>
+
+    <!-- Bootstrap declaration before site.css allows use of site.css to theme Bootstrap modules. -->
+    <link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Before site.css in case we want site.css to override its settings. -->
+    <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
     <!-- Root '~' addition needed after file moved to nested dir. -->
     <link href="~/css/site.css" rel="stylesheet" />
 </head>
 <body>
-    <header>
-        <h1>Welcome to Dutch Treat</h1>
-        <menu>
-            <ul>
-                <li><a asp-controller="App" asp-action="Index">Home</a></li>
-                <li><a asp-controller="App" asp-action="Contact">Contact</a></li>
-                <li><a asp-controller="App" asp-action="About">About</a></li>
-            </ul>
-        </menu>
+    <!-- BS provides fixed width containers that resize with page. -->
+    <header class="container">
+        <!-- HTML5 'nav' element. Bootstrap styling classes. -->
+        <nav class="navbar navbar-dark bg-dark navbar-expand-md">
+            <h1 class="navbar-brand"><i class="fa fa-paint-brush"></i> Welcome to Dutch Treat</h1>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#theMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="theMenu" class="navbar-collapse collapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="App" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="App" asp-action="Contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="App" asp-action="About">About</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </header>
-    <section>
-        <h2>@ViewBag.Title</h2>
+    <section class="container">
+        <h2 class="text-center">@ViewBag.Title</h2>
         <!-- Renders contents of view Layout is templating. -->
-        @RenderBody() 
+        @RenderBody()
     </section>
-    <footer>Copyright 2017 Dutch Treat LLC</footer>
+    <footer class="container">
+        <div class="text-center">Copyright 2017 Dutch Treat LLC</div>        
+    </footer>
 
     <!-- Above index.js so it can be consumed by by that script. Couldn't be drag/dropped, had to be manually typed. -->
     <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+
+    <!-- After jQuery, because it requires jQuery. Before index.js so that it can be consumed. -->
+    <script src="~/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 
     <!-- At bottom to prevent execution from happening before HTML elements have been created.-->
     <script src="~/js/index.js"></script>

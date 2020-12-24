@@ -11,36 +11,43 @@
     <script src="~/node_modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
 }
 
-<!-- Tells form to use post back to server when submitted. -->
-<!-- Searches for a POST controller method matching the view's name. -->
-<form method="post">
-    <!-- Tag helper uses div to display generic model issues above form. -->
-    <div asp-validation-summary="ModelOnly"></div>
-    <!-- Sets focus to 'asp-for' specified input when clicked/focused. -->
-    <label asp-for="Name">Your Name:</label>
-    <br />
-    <!-- Setting 'asp-for' property of input maps up with model properties. -->
-    <input asp-for="Name" />
-    <!-- Displays property validation errors more specifically and closer. -->
-    <span asp-validation-for="Name"></span>
-    <br />
-    <label asp-for="Email">Email:</label>
-    <br />
-    <!-- Setting 'type' property validates input as 'valid' email format. -->
-    <input type="email" asp-for="Email" />
-    <span asp-validation-for="Email"></span>
-    <br />
-    <label asp-for="Subject">Subject:</label>
-    <br />
-    <input type="text" asp-for="Subject" />
-    <span asp-validation-for="Subject"></span>
-    <br />
-    <label asp-for="Message">Message:</label>
-    <br />
-    <textarea rows="4" asp-for="Message"></textarea>
-    <span asp-validation-for="Message"></span>
-    <br />
-    <!-- Form looks for 'submit' input to trigger specified 'method'. -->
-    <input type="submit" value="Send Message" />
-    <div>@ViewBag.UserMessage</div> <!-- Communicates back after submit. -->
-</form>
+<!-- Centers on screen through use of columns and offset. -->
+<div class="col-md-6 offset-md-3">
+    <div class="card card-body bg-light">
+        <!-- Tells form to use post back to server when submitted. -->
+        <!-- Searches for a POST controller method matching the view's name. -->
+        <form method="post">
+            <!-- Tag helper uses div to display generic model issues above form. -->
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <!-- Sets focus to 'asp-for' specified input when clicked/focused. -->
+                <label asp-for="Name">Your Name:</label>
+                <!-- Setting 'asp-for' property of input maps up with model properties. -->
+                <input asp-for="Name" class="form-control" />
+                <!-- Displays property validation errors more specifically and closer. -->
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email">Email:</label>
+                <!-- Setting 'type' property validates input as 'valid' email format. -->
+                <input type="email" asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject">Subject:</label>
+                <input type="text" asp-for="Subject" class="form-control" />
+                <span asp-validation-for="Subject" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Message">Message:</label>
+                <textarea rows="4" asp-for="Message" class="form-control"></textarea>
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <!-- Form looks for 'submit' input to trigger specified 'method'. -->
+                <button type="submit" value="Send Message" class="btn btn-primary btn-sm"><i class="fa fa-envelope"></i> Send Message</button> 
+                <div class="text-success">@ViewBag.UserMessage</div> <!-- Communicates back after submit. -->
+            </div>
+        </form>
+    </div>
+</div>

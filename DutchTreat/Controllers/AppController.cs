@@ -15,6 +15,9 @@ namespace DutchTreat.Controllers
 
         public IActionResult Index()
         {
+            // Set in Controller as opposed to in CSHTML.
+            ViewBag.Title = "Home";
+
             return View();
         }
 
@@ -43,7 +46,7 @@ namespace DutchTreat.Controllers
             }
             else
             {
-                // Show the erros.
+                // Show the errors.
                 // Shouldn't be needed if Pages section worked, but it doesn't.
             }
 
@@ -52,7 +55,6 @@ namespace DutchTreat.Controllers
 
         public IActionResult About()
         {
-            // Set in Controller as opposed to in CSHTML.
             ViewBag.Title = "About Us";
 
             return View();
