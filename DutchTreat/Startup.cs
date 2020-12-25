@@ -22,11 +22,15 @@ namespace DutchTreat
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // Creates DbContext as scoped service.
             services.AddDbContext<DutchContext>(cfg =>
             {
                 // Using MySQL required different setup process. Documented externally.
                 cfg.UseMySql(_config.GetConnectionString("DutchConnectionString"));
             });
+
+            // Registers DutchSeeder with DependencyInjection service layer.
+            services.AddTransient<DutchSeeder>();
 
             // Sets up dependency injection to inject given class in place of interface.
             services.AddTransient<IMailService, NullMailService>();

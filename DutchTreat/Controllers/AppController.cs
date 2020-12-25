@@ -22,6 +22,9 @@ namespace DutchTreat.Controllers
             // Set in Controller as opposed to in CSHTML.
             ViewBag.Title = "Home";
 
+            // Testing database seeding by querying Products table.
+            _context.Products.ToList();
+
             return View();
         }
 
