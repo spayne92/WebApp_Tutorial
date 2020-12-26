@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using DutchTreat.Data;
 using DutchTreat.Services;
 using DutchTreat.ViewModels;
@@ -9,18 +8,18 @@ namespace DutchTreat.Controllers
     public class AppController : Controller
     {
         private readonly IMailService _mailService;
-        private readonly DutchContext _context;
+        private readonly IDutchRepository _repository;
 
-        public AppController(IMailService mailService, DutchContext context)
+        public AppController(IMailService mailService, IDutchRepository repository)
         {
             _mailService = mailService;
-            _context = context;
+            _repository = repository;
         }
 
         public IActionResult Index()
         {
             // Testing database seeding by querying Products table.
-            _context.Products.ToList();
+            _repository.GetAllProducts();
 
             return View();
         }
@@ -68,9 +67,7 @@ namespace DutchTreat.Controllers
         {
             ViewBag.Title = "Shop";
 
-            var result = _context.Products
-                .OrderBy(p => p.Category)
-                .ToList();
+            var result = _repository.GetAllProducts();
 
             return View(result);
         }

@@ -29,12 +29,16 @@ namespace DutchTreat
                 cfg.UseMySql(_config.GetConnectionString("DutchConnectionString"));
             });
 
+            // Sets up dependency injection to inject given class in place of interface.
+            // Reconstructs everytime one is needed.
+            services.AddTransient<IMailService, NullMailService>();
+            // Support for real mail service needed
+
             // Registers DutchSeeder with DependencyInjection service layer.
             services.AddTransient<DutchSeeder>();
 
-            // Sets up dependency injection to inject given class in place of interface.
-            services.AddTransient<IMailService, NullMailService>();
-            // Support for real mail service needed
+            // Reuses single instance through scope and then deconstructs.
+            services.AddScoped<IDutchRepository, DutchRepository>();
 
             // Adds MVC service dependencies (req. for MapControllerRoute).
             services.AddControllersWithViews();
