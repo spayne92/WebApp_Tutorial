@@ -17,7 +17,10 @@ namespace DutchTreat.Controllers
         }
 
         public IActionResult Index()
-        {
+        { 
+            // Set in Controller as opposed to in CSHTML.
+            ViewBag.Title = "Home";
+
             // Testing database seeding by querying Products table.
             _repository.GetAllProducts();
 
@@ -65,8 +68,6 @@ namespace DutchTreat.Controllers
 
         public IActionResult Shop()
         {
-            ViewBag.Title = "Shop";
-
             var result = _repository.GetAllProducts();
 
             return View(result);
