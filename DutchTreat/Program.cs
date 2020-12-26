@@ -14,9 +14,25 @@ namespace DutchTreat
             var host = BuildWebHost(args);
             SeedDb(host);
             host.Run();
+        }
 
-            // Old one-line technique using obsolete IHostBuilder.
-            //CreateHostBuilder(args).Build().Run();
+        private static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                   .ConfigureAppConfiguration(SetupConfiguration)
+                   .UseStartup<Startup>()
+                   .Build();
+
+        private static void SetupConfiguration(WebHostBuilderContext ctx, IConfigurationBuilder builder)
+        {
+            // Removing the default configuration options.
+            builder.Sources.Clear();
+
+            // Adds multiple configs from multiple sources to central store.
+            // Treats order of lines as hierarchy for conflicting config settings.
+            // JSON line adds main config as not optional and reload on change.
+            builder.AddJsonFile("config.json", false, true)
+                .AddXmlFile("config.xml", true) // optional
+                .AddEnvironmentVariables();
         }
 
         private static void SeedDb(IWebHost host)
@@ -31,34 +47,6 @@ namespace DutchTreat
                 var seeder = scope.ServiceProvider.GetService<DutchSeeder>();
                 seeder.Seed();
             }
-        }
-
-        private static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                   .ConfigureAppConfiguration(SetupConfiguration)
-                   .UseStartup<Startup>()
-                   .Build();
-
-        // Obsolete HostBuilder method. Used this from scratch project somehow.
-        //public static IHostBuilder CreateHostBuilder(string[] args) =>
-        //    Host.CreateDefaultBuilder(args)
-        //        .ConfigureAppConfiguration(SetupConfiguration)
-        //        .ConfigureWebHostDefaults(webBuilder =>
-        //        {
-        //            webBuilder.UseStartup<Startup>();
-        //        });
-
-        private static void SetupConfiguration(WebHostBuilderContext ctx, IConfigurationBuilder builder)
-        {
-            // Removing the default configuration options.
-            builder.Sources.Clear();
-
-            // Adds multiple configs from multiple sources to central store.
-            // Treats order of lines as hierarchy for conflicting config settings.
-            // JSON line adds main config as not optional and reload on change.
-            builder.AddJsonFile("config.json", false, true)
-                .AddXmlFile("config.xml", true) // optional
-                .AddEnvironmentVariables();
         }
     }
 }

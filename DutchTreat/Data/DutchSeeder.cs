@@ -9,7 +9,6 @@ namespace DutchTreat.Data
 {
     public class DutchSeeder
     {
-        // Tutorial was using IHostingEnvironment, but warnings said it was obsolete.
         private readonly IWebHostEnvironment _hosting;
         private readonly DutchContext _ctx;
 
@@ -21,7 +20,7 @@ namespace DutchTreat.Data
 
         public void Seed()
         {
-            // Ensures created, which runs previous migrations, like basic Order seeding.
+            // Runs previous migrations, like basic Order seeding in SeedData.
             _ctx.Database.EnsureCreated();
 
             // Queries DB to check for existing Product records.

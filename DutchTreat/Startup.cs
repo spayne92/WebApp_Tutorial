@@ -22,7 +22,7 @@ namespace DutchTreat
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            // Creates DbContext as scoped service.
+            // Creates DbContext as scoped service to be injected where needed.
             services.AddDbContext<DutchContext>(cfg =>
             {
                 // Using MySQL required different setup process. Documented externally.
