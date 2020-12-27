@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,7 +42,9 @@ namespace DutchTreat
             services.AddScoped<IDutchRepository, DutchRepository>();
 
             // Adds MVC service dependencies (req. for MapControllerRoute).
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            // Enforces compatibility for features like documentation attribute tags.
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
