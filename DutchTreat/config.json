@@ -1,0 +1,12 @@
+{
+	"ConnectionStrings": {
+		"DutchConnectionString": "Server=localhost;Database=dutch_treat_db;User Id=admin;Persist Security Info=True;"
+	},
+	"Logging": {
+		"LogLevel": {
+			// Configures different logging levels based on logger type names.
+			"Default": "Information",
+			"Microsoft":  "Warning"
+		}
+	}
+}

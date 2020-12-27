@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Product>
+
+<h1>Shop</h1>
+<p>Count: @Model.Count()</p>
+<div class="row">
+    @foreach (var p in Model)
+    {
+        <div class="col-md-3">
+            <!-- Border contain a light, rounded, background with slight padding. -->
+            <div class="border bg-light rounded p-1">
+                <!-- Parenthesis designate what is and isn't Razor. -->
+                <img src="~/img/@(p.ArtId).jpg" class="img-fluid" alt="@p.Title"/>
+                <h3>@p.Category - @p.Size</h3>
+                <ul>
+                    <!-- Rounding required to trunacte decimals from model. -->
+                    <li>Price: $@decimal.Round(p.Price, 2, MidpointRounding.AwayFromZero)</li>
+                    <li>Artist: @p.Artist</li>
+                    <li>Title: @p.Title</li>
+                    <li>Description: @p.ArtDescription</li>
+                </ul>
+
+                <!-- Multiple CSS classes can be assigned and both applied. -->
+                <!-- Bootstrap Philosophy: First class defines what object is, second changes part. -->
+                <button id="buyButton" class="btn btn-success">Buy</button>
+            </div>
+        </div>
+    }
+</div>
