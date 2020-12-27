@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using DutchTreat.Data;
 using DutchTreat.Services;
 
@@ -43,8 +44,12 @@ namespace DutchTreat
 
             // Adds MVC service dependencies (req. for MapControllerRoute).
             services.AddControllersWithViews()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            // Enforces compatibility for features like documentation attribute tags.
+                // Enforces compatibility for features like documentation attribute tags.
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                // Allows child entities to have references to parents and still be included when querying them.
+                //      The better option is to not have self-referencing loops. Need to fix models after tutorial.
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+                // Newstonsoft has to be referenced and included specifically since being deprecated from main MVC.
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

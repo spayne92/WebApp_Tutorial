@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using DutchTreat.Data.Entities;
-
 
 namespace DutchTreat.Data
 {
@@ -48,6 +48,40 @@ namespace DutchTreat.Data
             catch (Exception ex)
             {
                 _logger.LogInformation($"GetProductsByCategory failed: {ex}");
+
+                return null;
+            }
+        }
+
+        public IEnumerable<Order> GetAllOrders()
+        {
+            try
+            {
+                return _ctx.Orders
+                    .Include(o => o.Items) // Includes sub-items. Excluded by default.
+                    .ThenInclude(i => i.Product) // Includes sub-items' sub-items.
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"GetAllOrders failed: {ex}");
+
+                return null;
+            }
+        }
+        public Order GetOrderById(int id)
+        {
+            try
+            {
+                return _ctx.Orders
+                    .Include(o => o.Items)
+                    .ThenInclude(i => i.Product)
+                    .Where(o => o.Id == id)
+                    .FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"GetAllOrders failed: {ex}");
 
                 return null;
             }

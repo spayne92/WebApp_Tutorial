@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+	 <!-- Newtsonsoft library required separately since depracated from main MVC library. -->
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.10">
       <PrivateAssets>all</PrivateAssets>
