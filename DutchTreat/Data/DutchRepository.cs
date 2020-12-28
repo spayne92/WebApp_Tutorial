@@ -53,14 +53,21 @@ namespace DutchTreat.Data
             }
         }
 
-        public IEnumerable<Order> GetAllOrders()
+        public IEnumerable<Order> GetAllOrders(bool includeItems)
         {
             try
             {
-                return _ctx.Orders
-                    .Include(o => o.Items) // Includes sub-items. Excluded by default.
-                    .ThenInclude(i => i.Product) // Includes sub-items' sub-items.
-                    .ToList();
+                if (includeItems)
+                {
+                    return _ctx.Orders
+                        .Include(o => o.Items) // Includes sub-items. Excluded by default.
+                        .ThenInclude(i => i.Product) // Includes sub-items' sub-items.
+                        .ToList();
+                }
+                else
+                {
+                    return _ctx.Orders.ToList();
+                }
             }
             catch (Exception ex)
             {

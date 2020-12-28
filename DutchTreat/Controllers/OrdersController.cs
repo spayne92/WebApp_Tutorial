@@ -9,7 +9,7 @@ using DutchTreat.ViewModels;
 
 namespace DutchTreat.Controllers
 {
-    [Route("api/[Controller]")]
+    [Route("/api/[Controller]")]
     public class OrdersController : ControllerBase
     {
         private readonly IDutchRepository _repository;
@@ -22,16 +22,18 @@ namespace DutchTreat.Controllers
             _repository = repository;
             _logger = logger;
             _mapper = mapper;
-
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(bool includeItems = true)
         {
             try
             {
+                // Reduces load when given the value 'false' from API requests.
+                var results = _repository.GetAllOrders(includeItems);
+
                 // Single entity mapping configurations also provide mappings for collections of those entities.
-                return Ok(_mapper.Map<IEnumerable<Order>, IEnumerable<OrderViewModel>>(_repository.GetAllOrders()));
+                return Ok(_mapper.Map<IEnumerable<Order>, IEnumerable<OrderViewModel>>(results));
             }
             catch (Exception ex)
             {
