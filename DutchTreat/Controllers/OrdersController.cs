@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DutchTreat.Data;
+using DutchTreat.Data.Entities;
 
 namespace DutchTreat.Controllers
 {
@@ -53,6 +54,32 @@ namespace DutchTreat.Controllers
                 _logger.LogError($"Orders.Get(id) (failed: {ex}");
                 return BadRequest($"Failed to get order: {id}");
             }
+        }
+        [HttpPost]
+        public IActionResult Post([FromBody]Order model)
+        {
+            // FromBody attribute overrides default of grabbing model from URL text.
+            try
+            { 
+                // Takes data and attaches to context.
+                _repository.AddEntity(model);
+
+                // Saves changes made in context.
+                if (_repository.SaveAll())
+                {
+                    // HTTP requires POST to return 'Created' 201 response if object created.
+                    return Created($"/api/order/{model.Id}", model);
+                    // URI sent back in case consumer needs to keep track whether they have most recent.
+                }
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Orders.Post(order) failed: {ex}");
+            }
+
+
+            return BadRequest($"Failed to save a new order");
         }
     }
 }

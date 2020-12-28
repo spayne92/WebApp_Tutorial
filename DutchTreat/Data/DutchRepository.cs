@@ -91,6 +91,7 @@ namespace DutchTreat.Data
         {
             try
             {
+                // Saves all changes made to context since previous save.
                 return _ctx.SaveChanges() > 0;
             }
             catch (Exception ex)
@@ -99,6 +100,12 @@ namespace DutchTreat.Data
 
                 return false;
             }
+        }
+
+        public void AddEntity(object model)
+        {
+            // Pushes into context, but does not commit/save.
+            _ctx.Add(model);
         }
     }
 }
