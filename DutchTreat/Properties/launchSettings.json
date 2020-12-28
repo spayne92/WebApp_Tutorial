@@ -1,21 +1,20 @@
 {
-  "iisSettings": {  // Used when run as IIS service.
+  "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:51608",
+      "applicationUrl": "http://localhost:8888",
       "sslPort": 0
     }
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "DutchTreat": { // Used when run as executable service.
+    "DutchTreat": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
