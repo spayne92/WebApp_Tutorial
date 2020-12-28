@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DutchTreat.Data;
+using DutchTreat.ViewModels;
 using DutchTreat.Data.Entities;
 
 namespace DutchTreat.Controllers
@@ -55,21 +56,50 @@ namespace DutchTreat.Controllers
                 return BadRequest($"Failed to get order: {id}");
             }
         }
+
         [HttpPost]
-        public IActionResult Post([FromBody]Order model)
+        public IActionResult Post([FromBody]OrderViewModel model)
         {
             // FromBody attribute overrides default of grabbing model from URL text.
             try
-            { 
-                // Takes data and attaches to context.
-                _repository.AddEntity(model);
-
-                // Saves changes made in context.
-                if (_repository.SaveAll())
+            {
+                if (ModelState.IsValid)
                 {
-                    // HTTP requires POST to return 'Created' 201 response if object created.
-                    return Created($"/api/order/{model.Id}", model);
-                    // URI sent back in case consumer needs to keep track whether they have most recent.
+                    var newOrder = new Order()
+                    {
+                        OrderDate = model.OrderDate,
+                        OrderNumber = model.OrderNumber,
+                        Id = model.OrderId
+                    };
+
+                    // If date not specified, overwrite it.
+                    if (newOrder.OrderDate == DateTime.MinValue)
+                    {
+                        newOrder.OrderDate = DateTime.Now;
+                    } 
+
+                    // Takes data and attaches to context.
+                    _repository.AddEntity(newOrder);
+
+                    // Saves changes made in context.
+                    if (_repository.SaveAll())
+                    {
+                        var returnModel = new OrderViewModel()
+                        {
+                            OrderDate = newOrder.OrderDate,
+                            OrderNumber = newOrder.OrderNumber,
+                            OrderId = newOrder.Id
+                        };
+
+                        // HTTP requires POST to return 'Created' 201 response if object created.
+                        return Created($"/api/order/{returnModel.OrderId}", returnModel);
+                        // URI sent back in case consumer needs to keep track whether they have most recent.
+                    }
+                }
+                else
+                {
+                    // Exposes errors in model state from the data request to sender.
+                    return BadRequest(ModelState);
                 }
 
             }
@@ -77,7 +107,6 @@ namespace DutchTreat.Controllers
             {
                 _logger.LogError($"Orders.Post(order) failed: {ex}");
             }
-
 
             return BadRequest($"Failed to save a new order");
         }
