@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DutchTreat.Data;
-using DutchTreat.ViewModels;
 using DutchTreat.Data.Entities;
+using DutchTreat.ViewModels;
 
 namespace DutchTreat.Controllers
 {
@@ -12,11 +14,14 @@ namespace DutchTreat.Controllers
     {
         private readonly IDutchRepository _repository;
         private readonly ILogger<ProductsController> _logger;
+        private readonly IMapper _mapper;
 
-        public OrdersController(IDutchRepository repository, ILogger<ProductsController> logger)
+        public OrdersController(IDutchRepository repository, ILogger<ProductsController> logger,
+            IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
 
         }
 
@@ -25,7 +30,8 @@ namespace DutchTreat.Controllers
         {
             try
             {
-                return Ok(_repository.GetAllOrders());
+                // Single entity mapping configurations also provide mappings for collections of those entities.
+                return Ok(_mapper.Map<IEnumerable<Order>, IEnumerable<OrderViewModel>>(_repository.GetAllOrders()));
             }
             catch (Exception ex)
             {
@@ -43,7 +49,9 @@ namespace DutchTreat.Controllers
                 var order = _repository.GetOrderById(id);
                 if (order != null)
                 {
-                    return Ok(order);
+                    // Maps Order entity to OrderViewModel to give to request.
+                    return Ok(_mapper.Map<Order, OrderViewModel>(order));
+                    // Requires existing type map configuration for the types.
                 }
                 else
                 {
@@ -65,31 +73,23 @@ namespace DutchTreat.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var newOrder = new Order()
-                    {
-                        OrderDate = model.OrderDate,
-                        OrderNumber = model.OrderNumber,
-                        Id = model.OrderId
-                    };
+                    // Maps OrderViewModel from request to Order entity for operations.
+                    var orderEntity = _mapper.Map<OrderViewModel, Order>(model);
 
                     // If date not specified, overwrite it.
-                    if (newOrder.OrderDate == DateTime.MinValue)
+                    if (orderEntity.OrderDate == DateTime.MinValue)
                     {
-                        newOrder.OrderDate = DateTime.Now;
+                        orderEntity.OrderDate = DateTime.Now;
                     } 
 
                     // Takes data and attaches to context.
-                    _repository.AddEntity(newOrder);
+                    _repository.AddEntity(orderEntity);
 
                     // Saves changes made in context.
                     if (_repository.SaveAll())
                     {
-                        var returnModel = new OrderViewModel()
-                        {
-                            OrderDate = newOrder.OrderDate,
-                            OrderNumber = newOrder.OrderNumber,
-                            OrderId = newOrder.Id
-                        };
+                        // Maps Order entity back to OrderViewModel for response request.
+                        var returnModel = _mapper.Map<Order, OrderViewModel>(orderEntity);
 
                         // HTTP requires POST to return 'Created' 201 response if object created.
                         return Created($"/api/order/{returnModel.OrderId}", returnModel);

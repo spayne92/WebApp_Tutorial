@@ -1,3 +1,5 @@
+using System.Reflection;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +40,10 @@ namespace DutchTreat
 
             // Registers DutchSeeder with DependencyInjection service layer.
             services.AddTransient<DutchSeeder>();
+
+            // Add ability to inject AutoMapper into controllers of given assembly/project.
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            // Looks for profiles created for mappings within the given assembly.
 
             // Reuses single instance through scope and then deconstructs.
             services.AddScoped<IDutchRepository, DutchRepository>();
