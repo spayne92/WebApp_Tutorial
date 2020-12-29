@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using DutchTreat.Data.Entities;
-
 
 namespace DutchTreat.Data
 {
@@ -53,10 +53,52 @@ namespace DutchTreat.Data
             }
         }
 
+        public IEnumerable<Order> GetAllOrders(bool includeItems)
+        {
+            try
+            {
+                if (includeItems)
+                {
+                    return _ctx.Orders
+                        .Include(o => o.Items) // Includes sub-items. Excluded by default.
+                        .ThenInclude(i => i.Product) // Includes sub-items' sub-items.
+                        .ToList();
+                }
+                else
+                {
+                    return _ctx.Orders.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"GetAllOrders failed: {ex}");
+
+                return null;
+            }
+        }
+        public Order GetOrderById(int id)
+        {
+            try
+            {
+                return _ctx.Orders
+                    .Include(o => o.Items)
+                    .ThenInclude(i => i.Product)
+                    .Where(o => o.Id == id)
+                    .FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"GetAllOrders failed: {ex}");
+
+                return null;
+            }
+        }
+
         public bool SaveAll()
         {
             try
             {
+                // Saves all changes made to context since previous save.
                 return _ctx.SaveChanges() > 0;
             }
             catch (Exception ex)
@@ -65,6 +107,12 @@ namespace DutchTreat.Data
 
                 return false;
             }
+        }
+
+        public void AddEntity(object model)
+        {
+            // Pushes into context, but does not commit/save.
+            _ctx.Add(model);
         }
     }
 }
