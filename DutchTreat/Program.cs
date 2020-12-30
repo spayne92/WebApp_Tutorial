@@ -45,7 +45,7 @@ namespace DutchTreat
                 // Previously just host.Services.GetService<DutchSeeder>(); and seeder.Seed().
                 // But required scoped context to be wrapped around it and used.
                 var seeder = scope.ServiceProvider.GetService<DutchSeeder>();
-                seeder.Seed();
+                seeder.SeedAsync().Wait();
             }
         }
     }
