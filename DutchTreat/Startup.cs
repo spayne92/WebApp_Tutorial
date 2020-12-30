@@ -2,6 +2,7 @@ using System.Reflection;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using DutchTreat.Data;
+using DutchTreat.Data.Entities;
 using DutchTreat.Services;
 
 namespace DutchTreat
@@ -26,6 +28,16 @@ namespace DutchTreat
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // Creates identity system for user and role types. 
+            services.AddIdentity<StoreUser, IdentityRole>(cfg =>
+            {
+                // Configuring the identity system.
+                cfg.User.RequireUniqueEmail = true;
+            })
+                // Create EF implementation for the identity in the specified context.
+                .AddEntityFrameworkStores<DutchContext>();
+                // Can have separate data stores for the project vs identity, but not doing so for this app.
+            
             // Creates DbContext as scoped service to be injected where needed.
             services.AddDbContext<DutchContext>(cfg =>
             {
@@ -85,6 +97,10 @@ namespace DutchTreat
 
             // Turns on generic routing from .NET Core
             app.UseRouting();
+
+            // Places authentiaction in routing pipleline before it gets to end points.
+            app.UseAuthentication(); // Identifies user.
+            app.UseAuthorization();  // Verifies what user has acces to.
 
             // "Buys into" MVC. Makes controller and view endpoints connect.
             app.UseEndpoints(cfg =>
