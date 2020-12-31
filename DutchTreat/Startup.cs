@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using DutchTreat.Data;
 using DutchTreat.Data.Entities;
@@ -37,7 +40,26 @@ namespace DutchTreat
                 // Create EF implementation for the identity in the specified context.
                 .AddEntityFrameworkStores<DutchContext>();
                 // Can have separate data stores for the project vs identity, but not doing so for this app.
-            
+
+            // Explicitly configuring authentication. Not required if just using cookies.
+            services.AddAuthentication(options =>
+            {
+                // Possible overriding of defaults, for JWT only solution.
+                //options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                //options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            })
+                .AddCookie()            // The default, but required once calling AddAuth.
+                .AddJwtBearer(cfg =>    // Token support enabled alongside cookies.
+                {
+                    cfg.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = _config["Tokens:Issuer"],
+                        ValidAudience = _config["Tokens:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]))
+                    };
+                });
+
             // Creates DbContext as scoped service to be injected where needed.
             services.AddDbContext<DutchContext>(cfg =>
             {
@@ -45,20 +67,20 @@ namespace DutchTreat
                 cfg.UseMySql(_config.GetConnectionString("DutchConnectionString"));
             });
 
-            // Sets up dependency injection to inject given class in place of interface.
-            // Reconstructs everytime one is needed.
-            services.AddTransient<IMailService, NullMailService>();
-            // Support for real mail service needed
-
-            // Registers DutchSeeder with DependencyInjection service layer.
-            services.AddTransient<DutchSeeder>();
-
             // Add ability to inject AutoMapper into controllers of given assembly/project.
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             // Looks for profiles created for mappings within the given assembly.
 
+            // Registers DutchSeeder with DependencyInjection service layer.
+            services.AddTransient<DutchSeeder>();
+
             // Reuses single instance through scope and then deconstructs.
             services.AddScoped<IDutchRepository, DutchRepository>();
+
+            // Sets up dependency injection to inject given class in place of interface.
+            // Reconstructs everytime one is needed.
+            services.AddTransient<IMailService, NullMailService>();
+            // Support for real mail service needed
 
             // Adds MVC service dependencies (req. for MapControllerRoute).
             services.AddControllersWithViews()
@@ -71,7 +93,7 @@ namespace DutchTreat
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             /*---- Organizing Order of Middleware for Application ----*/
 
@@ -96,11 +118,11 @@ namespace DutchTreat
             app.UseNodeModules();
 
             // Turns on generic routing from .NET Core
-            app.UseRouting();
+            app.UseRouting();   // Important to be placed before authorization.
 
             // Places authentiaction in routing pipleline before it gets to end points.
             app.UseAuthentication(); // Identifies user.
-            app.UseAuthorization();  // Verifies what user has acces to.
+            app.UseAuthorization();  // Verifies what user has access to.
 
             // "Buys into" MVC. Makes controller and view endpoints connect.
             app.UseEndpoints(cfg =>

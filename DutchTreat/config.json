@@ -5,8 +5,13 @@
 	"Logging": {
 		"LogLevel": {
 			// Configures different logging levels based on logger type names.
-			"Default": "Information",
-			"Microsoft":  "Warning"
+			"Default": "Trace",
+			"Microsoft": "Trace"
 		}
+	},
+	"Tokens": {
+		"Key": "testkeyasdfasdfasdfasd",
+		"Issuer": "localhost:8888",
+		"Audience": "users"
 	}
 }
