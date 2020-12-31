@@ -12,7 +12,7 @@ using DutchTreat.ViewModels;
 namespace DutchTreat.Controllers
 {
     [Route("/api/[Controller]")]        // [Authorize] to ALL actions.
-    [Authorize(AuthenticationSchemes=JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes=JwtBearerDefaults.AuthenticationScheme)]
     public class OrdersController : ControllerBase
     {
         private readonly IDutchRepository _repository;
@@ -46,8 +46,8 @@ namespace DutchTreat.Controllers
         }
 
         // Extends URI with another property and also defines type.
-        [HttpGet("{id:int}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("{id:int}")]           // Action level JWT Authentication
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Get(int id)
         {
             try
