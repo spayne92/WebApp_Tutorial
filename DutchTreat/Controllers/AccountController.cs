@@ -147,7 +147,7 @@ namespace DutchTreat.Controllers
                     if (result.Succeeded)
                     {
                         var tokenHandler = new JwtSecurityTokenHandler();
-                        var key = Encoding.ASCII.GetBytes(_config["Tokens:Key"]);
+                        var key = Encoding.UTF8.GetBytes(_config["Tokens:Key"]);
 
                         var tokenDescriptor = new SecurityTokenDescriptor
                         {
