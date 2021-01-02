@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DutchTreat.Data;
@@ -9,14 +11,15 @@ using DutchTreat.ViewModels;
 
 namespace DutchTreat.Controllers
 {
-    [Route("/api/[Controller]")]
+    [Route("/api/[Controller]")]        // [Authorize] to ALL actions.
+    //[Authorize(AuthenticationSchemes=JwtBearerDefaults.AuthenticationScheme)]
     public class OrdersController : ControllerBase
     {
         private readonly IDutchRepository _repository;
-        private readonly ILogger<ProductsController> _logger;
+        private readonly ILogger<OrdersController> _logger;
         private readonly IMapper _mapper;
 
-        public OrdersController(IDutchRepository repository, ILogger<ProductsController> logger,
+        public OrdersController(IDutchRepository repository, ILogger<OrdersController> logger,
             IMapper mapper)
         {
             _repository = repository;
@@ -43,7 +46,8 @@ namespace DutchTreat.Controllers
         }
 
         // Extends URI with another property and also defines type.
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}")]           // Action level JWT Authentication
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Get(int id)
         {
             try
