@@ -1,7 +1,9 @@
 
 // Exports ONLY the tagged classes. Removes from global scope.
-export class StoreCustomer {
+//export class StoreCustomer {
 // Requires loader like webpack, but we aren't, so using global JS scope.
+
+class StoreCustomer {
 
     // Adds private class parameters of types.
     constructor(private firstName:string, private lastName:string) {
