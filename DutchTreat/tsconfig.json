@@ -1,0 +1,8 @@
+{
+	// Includes all *.ts files from all ** subdirectories.
+	"include": [ "wwwroot/ts/**/*.ts" ],
+	"compilerOptions": {
+		"target": "es5", // Required for certain features. Like accessors. 
+		"sourceMap":  true // Enables source mapping for debugging. (*.js.map)
+	}
+}
