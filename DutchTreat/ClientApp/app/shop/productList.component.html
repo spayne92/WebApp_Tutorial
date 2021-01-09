@@ -1,0 +1,7 @@
+﻿<div class="row">
+    <ul>
+        <!-- Generates an <li> for each product. -->
+        <li *ngFor="let p of products">{{ p.title }}: {{ p.price | currency:"USD":true }}</li>
+                        <!-- Piping '|' determines how to display chosen exposed data. -->
+    </ul>
+</div>
