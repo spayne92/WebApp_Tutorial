@@ -1,4 +1,4 @@
-﻿import { Component } from "@angular/core"
+﻿import { Component, OnInit } from "@angular/core"
 import { DataService } from '../shared/dataService';
 
 @Component({
@@ -6,12 +6,22 @@ import { DataService } from '../shared/dataService';
     templateUrl: "productList.component.html",
     styleUrls: []
 })
-export class ProductList {
+export class ProductList implements OnInit{
 
     // Builds private member of class and injects object.
     constructor(private data: DataService) {
-        this.products = data.products;
     }
 
-    public products;
+    public products: any[] = [];
+
+    // Interface OnInit causes method to be called after Angular bookkeeping completed.
+    ngOnInit(): void {
+        // Subscribes to async HTTP request and calls method everytime it returns.
+        this.data.loadProducts()
+            .subscribe(success => {
+                if (success) {
+                    this.products = this.data.products;
+                }
+            })
+    }
 }

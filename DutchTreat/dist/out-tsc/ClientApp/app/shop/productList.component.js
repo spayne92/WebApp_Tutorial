@@ -4,7 +4,15 @@ let ProductList = class ProductList {
     // Builds private member of class and injects object.
     constructor(data) {
         this.data = data;
-        this.products = data.products;
+        this.products = [];
+    }
+    ngOnInit() {
+        this.data.loadProducts()
+            .subscribe(success => {
+            if (success) {
+                this.products = this.data.products;
+            }
+        });
     }
 };
 ProductList = __decorate([

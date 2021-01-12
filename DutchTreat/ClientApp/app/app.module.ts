@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from './app.component';
 import { ProductList } from './shop/productList.component';
@@ -11,10 +12,11 @@ import { DataService } from "./shared/dataService"
     ProductList
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
   providers: [
-      DataService  // Declares as injectable.
+    DataService  // Declares as injectable.
   ],
   bootstrap: [AppComponent]
 })

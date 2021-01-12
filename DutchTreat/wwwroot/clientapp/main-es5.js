@@ -1,6 +1,10 @@
 (function () {
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
   (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"], {
     /***/
     0:
@@ -76,13 +80,30 @@
         }
       }
 
-      var ProductList = // Builds private member of class and injects object.
-      function ProductList(data) {
-        _classCallCheck(this, ProductList);
+      var ProductList = /*#__PURE__*/function () {
+        // Builds private member of class and injects object.
+        function ProductList(data) {
+          _classCallCheck(this, ProductList);
 
-        this.data = data;
-        this.products = data.products;
-      };
+          this.data = data;
+          this.products = [];
+        }
+
+        _createClass(ProductList, [{
+          key: "ngOnInit",
+          value: function ngOnInit() {
+            var _this = this;
+
+            this.data.loadProducts().subscribe(function (success) {
+              if (success) {
+                _this.products = _this.data.products;
+              }
+            });
+          }
+        }]);
+
+        return ProductList;
+      }();
 
       ProductList.ɵfac = function ProductList_Factory(t) {
         return new (t || ProductList)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_dataService__WEBPACK_IMPORTED_MODULE_1__["DataService"]));
@@ -315,19 +336,25 @@
       /* harmony import */
 
 
-      var _app_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! @angular/common/http */
+      "tk/3");
+      /* harmony import */
+
+
+      var _app_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! ./app.component */
       "HJlE");
       /* harmony import */
 
 
-      var _shop_productList_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+      var _shop_productList_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
       /*! ./shop/productList.component */
       "1BNF");
       /* harmony import */
 
 
-      var _shared_dataService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      var _shared_dataService__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
       /*! ./shared/dataService */
       "g4ZZ");
 
@@ -337,21 +364,21 @@
 
       AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineNgModule"]({
         type: AppModule,
-        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]]
+        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]]
       });
       AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector"]({
         factory: function AppModule_Factory(t) {
           return new (t || AppModule)();
         },
-        providers: [_shared_dataService__WEBPACK_IMPORTED_MODULE_4__["DataService"] // Declares as injectable.
+        providers: [_shared_dataService__WEBPACK_IMPORTED_MODULE_5__["DataService"] // Declares as injectable.
         ],
-        imports: [[_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"]]]
+        imports: [[_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"]]]
       });
 
       (function () {
         (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsetNgModuleScope"](AppModule, {
-          declarations: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"], _shop_productList_component__WEBPACK_IMPORTED_MODULE_3__["ProductList"]],
-          imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"]]
+          declarations: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"], _shop_productList_component__WEBPACK_IMPORTED_MODULE_4__["ProductList"]],
+          imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"]]
         });
       })();
       /*@__PURE__*/
@@ -361,11 +388,11 @@
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](AppModule, [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"],
           args: [{
-            declarations: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"], _shop_productList_component__WEBPACK_IMPORTED_MODULE_3__["ProductList"]],
-            imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"]],
-            providers: [_shared_dataService__WEBPACK_IMPORTED_MODULE_4__["DataService"] // Declares as injectable.
+            declarations: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"], _shop_productList_component__WEBPACK_IMPORTED_MODULE_4__["ProductList"]],
+            imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"]],
+            providers: [_shared_dataService__WEBPACK_IMPORTED_MODULE_5__["DataService"] // Declares as injectable.
             ],
-            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]]
+            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]]
           }]
         }], null, null);
       })();
@@ -441,21 +468,67 @@
       __webpack_require__.d(__webpack_exports__, "DataService", function () {
         return DataService;
       });
+      /* harmony import */
 
-      var DataService = function DataService() {
-        _classCallCheck(this, DataService);
 
-        this.products = [{
-          title: "First Product",
-          price: 19.99
-        }, {
-          title: "Second Product",
-          price: 9.99
-        }, {
-          title: "Third Product",
-          price: 14.99
-        }];
+      var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+      /*! @angular/core */
+      "fXoL");
+      /* harmony import */
+
+
+      var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! rxjs/operators */
+      "kU1M");
+      /* harmony import */
+
+
+      var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+      /*! @angular/common/http */
+      "tk/3");
+
+      var DataService = /*#__PURE__*/function () {
+        function DataService(http) {
+          _classCallCheck(this, DataService);
+
+          this.http = http;
+          this.products = [];
+        }
+
+        _createClass(DataService, [{
+          key: "loadProducts",
+          value: function loadProducts() {
+            var _this2 = this;
+
+            return this.http.get("/api/products").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (data) {
+              _this2.products = data;
+              return true;
+            }));
+          }
+        }]);
+
+        return DataService;
+      }();
+
+      DataService.ɵfac = function DataService_Factory(t) {
+        return new (t || DataService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]));
       };
+
+      DataService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
+        token: DataService,
+        factory: DataService.ɵfac
+      });
+      /*@__PURE__*/
+
+      (function () {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](DataService, [{
+          type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"]
+        }], function () {
+          return [{
+            type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]
+          }];
+        }, null);
+      })();
       /***/
 
     },
