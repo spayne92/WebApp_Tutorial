@@ -46,7 +46,13 @@
       /* harmony import */
 
 
-      var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      var _shared_dataService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+      /*! ../shared/dataService */
+      "g4ZZ");
+      /* harmony import */
+
+
+      var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
       /*! @angular/common */
       "ofXK");
 
@@ -70,23 +76,16 @@
         }
       }
 
-      var ProductList = function ProductList() {
+      var ProductList = // Builds private member of class and injects object.
+      function ProductList(data) {
         _classCallCheck(this, ProductList);
 
-        this.products = [{
-          title: "First Product",
-          price: 19.99
-        }, {
-          title: "Second Product",
-          price: 9.99
-        }, {
-          title: "Third Product",
-          price: 14.99
-        }];
+        this.data = data;
+        this.products = data.products;
       };
 
       ProductList.ɵfac = function ProductList_Factory(t) {
-        return new (t || ProductList)();
+        return new (t || ProductList)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_shared_dataService__WEBPACK_IMPORTED_MODULE_1__["DataService"]));
       };
 
       ProductList.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
@@ -114,8 +113,8 @@
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.products);
           }
         },
-        directives: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["NgForOf"]],
-        pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CurrencyPipe"]],
+        directives: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["NgForOf"]],
+        pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["CurrencyPipe"]],
         encapsulation: 2
       });
       /*@__PURE__*/
@@ -128,7 +127,11 @@
             templateUrl: "productList.component.html",
             styleUrls: []
           }]
-        }], null, null);
+        }], function () {
+          return [{
+            type: _shared_dataService__WEBPACK_IMPORTED_MODULE_1__["DataService"]
+          }];
+        }, null);
       })();
       /***/
 
@@ -321,6 +324,12 @@
       var _shop_productList_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
       /*! ./shop/productList.component */
       "1BNF");
+      /* harmony import */
+
+
+      var _shared_dataService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+      /*! ./shared/dataService */
+      "g4ZZ");
 
       var AppModule = function AppModule() {
         _classCallCheck(this, AppModule);
@@ -334,7 +343,8 @@
         factory: function AppModule_Factory(t) {
           return new (t || AppModule)();
         },
-        providers: [],
+        providers: [_shared_dataService__WEBPACK_IMPORTED_MODULE_4__["DataService"] // Declares as injectable.
+        ],
         imports: [[_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"]]]
       });
 
@@ -353,7 +363,8 @@
           args: [{
             declarations: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"], _shop_productList_component__WEBPACK_IMPORTED_MODULE_3__["ProductList"]],
             imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"]],
-            providers: [],
+            providers: [_shared_dataService__WEBPACK_IMPORTED_MODULE_4__["DataService"] // Declares as injectable.
+            ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]]
           }]
         }], null, null);
@@ -407,6 +418,44 @@
       _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["platformBrowser"]().bootstrapModule(_app_app_module__WEBPACK_IMPORTED_MODULE_2__["AppModule"])["catch"](function (err) {
         return console.error(err);
       });
+      /***/
+
+    },
+
+    /***/
+    "g4ZZ":
+    /*!*********************************************!*\
+      !*** ./ClientApp/app/shared/dataService.ts ***!
+      \*********************************************/
+
+    /*! exports provided: DataService */
+
+    /***/
+    function g4ZZ(module, __webpack_exports__, __webpack_require__) {
+      "use strict";
+
+      __webpack_require__.r(__webpack_exports__);
+      /* harmony export (binding) */
+
+
+      __webpack_require__.d(__webpack_exports__, "DataService", function () {
+        return DataService;
+      });
+
+      var DataService = function DataService() {
+        _classCallCheck(this, DataService);
+
+        this.products = [{
+          title: "First Product",
+          price: 19.99
+        }, {
+          title: "Second Product",
+          price: 9.99
+        }, {
+          title: "Third Product",
+          price: 14.99
+        }];
+      };
       /***/
 
     },
